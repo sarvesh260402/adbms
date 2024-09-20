@@ -1,0 +1,31 @@
+CREATE TABLE Users (
+       user_id INT PRIMARY KEY,
+       username VARCHAR(50)
+   );
+   
+  
+   CREATE TABLE Posts (
+       post_id INT PRIMARY KEY,
+       user_id INT,
+       content TEXT,
+       FOREIGN KEY (user_id) REFERENCES Users(user_id)
+   );
+   
+   
+   CREATE TABLE Comments (
+       comment_id INT PRIMARY KEY,
+       post_id INT,
+       user_id INT,
+       comment TEXT,
+       FOREIGN KEY (post_id) REFERENCES Posts(post_id),
+       FOREIGN KEY (user_id) REFERENCES Users(user_id)
+   );
+   
+INSERT INTO Users (user_id, username) VALUES (1, 'sarvesh'), (2, 'raj');
+INSERT INTO Posts (post_id, user_id, content) VALUES (1, 1, 'First post'), (2, 2, 'Hello world');
+INSERT INTO Comments (comment_id, post_id, user_id, comment) VALUES (1, 1, 2, 'Nice post!');
+
+
+SELECT Posts.post_id, Users.username, Posts.content 
+FROM Posts 
+JOIN Users ON Posts.user_id = Users.user_id;
